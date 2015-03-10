@@ -189,6 +189,7 @@ var jsPDF = (function(global) {
 			pageHeight,
 			pageMode,
 			zoomMode,
+			language,
 			layoutMode,
 			documentProperties = {
 				'title'    : '',
@@ -626,6 +627,12 @@ var jsPDF = (function(global) {
 		},
 		putCatalog = function() {
 			out('/Type /Catalog');
+
+			// Language
+			if (language) {
+				out('/Lang (' + language + ')');
+			}
+
 			out('/Pages 1 0 R');
 			// PDF13ref Section 7.2.1
 			if (!zoomMode) zoomMode = 'fullwidth';
@@ -1039,7 +1046,11 @@ var jsPDF = (function(global) {
 			layoutMode = layout;
 			pageMode   = pmode;
 			return this;
-		},
+		};
+		API.setLanguage = function(lang) {
+			language = lang;
+			return this;
+		};
 
 		/**
 		 * Adds text to page. Supports adding multiline text when 'text' argument is an Array of Strings.
